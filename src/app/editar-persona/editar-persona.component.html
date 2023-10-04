@@ -44,7 +44,7 @@
 
     <div class="form-group">
       <label for="tipodeusuario">Tipo de Usuario:</label>
-      <select id="tipodeusuario" formControlName="tipodeusuario" class="form-control">
+      <select id="tipodeusuario" formControlName="tipodeusuario" class="form-control" (change)="changelboxtipodeusuario()">
         <option value="profesor">Profesor</option>
         <option value="estudiante">Estudiante</option>
       </select>
@@ -61,6 +61,17 @@
       </select>
       <div *ngIf="personaForm.get('nivelacademico')?.hasError('required') && personaForm.get('nivelacademico')?.touched" class="text-danger">
         El nivel academico es requerida.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="areaestudio">Area de estudio:</label>
+      <select id="areaestudio" formControlName="areaestudio" class="form-control">
+       <option value="" disabled>Selecciona una opción</option>
+       <option *ngFor="let areaestudio of listareaestudio" [value]="areaestudio.value">{{ areaestudio.nombre }}</option>
+      </select>
+      <div *ngIf="personaForm.get('areaestudio')?.hasError('required')" class="text-danger">
+        El area de estudio es requerida.
       </div>
     </div>
 

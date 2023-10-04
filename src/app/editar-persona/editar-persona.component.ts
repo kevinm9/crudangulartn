@@ -20,6 +20,11 @@ export class EditarPersonaComponent implements OnInit {
     { value: 'tercer nivel', nombre: 'Tercer nivel' },
     { value: 'cuarto nivel', nombre: 'Cuarto nivel' },
   ];
+  listareaestudio: { value: string; nombre: string }[] = [
+    { value: 'matematicas', nombre: 'Matemáticas' },
+    { value: 'literatura', nombre: 'Literatura' },
+    { value: 'sistemas', nombre: 'Sistemas' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +44,7 @@ export class EditarPersonaComponent implements OnInit {
       tipodeusuario: ['', [Validators.required]],
       nivelacademico: ['', [Validators.required]],
       motivoderegistro: ['', [Validators.required]],
+      areaestudio: ['', [Validators.required]],
     });
   }
 
@@ -67,17 +73,28 @@ export class EditarPersonaComponent implements OnInit {
   guardarCambios(): void {
     if (this.personaForm.valid) {
       const personaActualizada: Persona = this.personaForm.value;
-
-      // Establece el valor en el formulario
       console.log(this.personaForm.get('nombres'));
-
       console.log(personaActualizada);
       this.persona = personaActualizada;
-
-      // Llama al servicio para actualizar la persona
       //this.personaService$.saveUser(personaActualizada);
     } else {
       console.log('formulario invalido');
     }
   }
+
+  changelboxtipodeusuario() {
+    switch (this.personaForm.get('tipodeusuario')?.value) {
+      case 'estudiante':
+        this.personaForm.patchValue({ motivoderegistro: 'academicos' });
+        break;
+      case 'profesor':
+        this.personaForm.patchValue({ motivoderegistro: 'ingreso extras' });
+        break;
+      default:
+        this.personaForm.patchValue({ motivoderegistro: 'academicos' });
+        break;
+    }
+  }
+
+
 }

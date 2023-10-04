@@ -1,5 +1,5 @@
 export interface Persona {
-  id?:Number;
+  id?: Number;
   nombres: string;
   correo: string;
   password: string;
@@ -7,6 +7,7 @@ export interface Persona {
   tipodeusuario?: string; // El signo de interrogación indica que este campo es opcional
   nivelacademico?: string;
   motivoderegistro?: string;
+  areaestudio?: string;
 }
 
 
