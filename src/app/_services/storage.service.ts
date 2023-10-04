@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Persona } from '../models/persona.model';
+
 
 const USER_KEY = 'auth-user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
   constructor() {}
@@ -17,13 +19,12 @@ export class StorageService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  public getUser(): any {
+  public getUser(): Persona|null {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {
       return JSON.parse(user);
     }
-
-    return {};
+    return null;
   }
 
   public isLoggedIn(): boolean {
@@ -31,7 +32,6 @@ export class StorageService {
     if (user) {
       return true;
     }
-
     return false;
   }
 }
