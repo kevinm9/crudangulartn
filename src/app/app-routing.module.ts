@@ -1,4 +1,6 @@
+import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.component';
 import { EditarPersonaComponent } from './editar-persona/editar-persona.component';
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -14,7 +16,7 @@ import { BoardAdminComponent } from './board-admin/board-admin.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: GuardarPersonaComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },

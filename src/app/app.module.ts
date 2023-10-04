@@ -16,6 +16,8 @@ import { BoardUserComponent } from './board-user/board-user.component';
 
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
 import { EditarPersonaComponent } from './editar-persona/editar-persona.component';
+import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.component';
+
 
 @NgModule({
   declarations: [
@@ -27,16 +29,17 @@ import { EditarPersonaComponent } from './editar-persona/editar-persona.componen
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    EditarPersonaComponent
+    EditarPersonaComponent,
+    GuardarPersonaComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
-import { UserService } from '../_services/user.service';
 import { StorageService } from '../_services/storage.service';
 import { Persona } from '../models/persona.model';
 import { passwordValidator } from '../_helpers/validations'; // Importa la función de validación desde el archivo 'validations.ts'
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-editar-persona',
-  templateUrl: './editar-persona.component.html',
-  styleUrls: ['./editar-persona.component.css'],
+  selector: 'app-guardar-persona',
+  templateUrl: './guardar-persona.component.html',
+  styleUrls: ['./guardar-persona.component.css'],
 })
-export class EditarPersonaComponent implements OnInit {
+export class GuardarPersonaComponent implements OnInit {
   personaForm: FormGroup;
-  persona: Persona | null = null;
+  persona?: Persona;
   listnivelacademico: { value: string; nombre: string }[] = [
     { value: 'primaria', nombre: 'Primaria' },
     { value: 'secundaria', nombre: 'secundaria' },
@@ -29,61 +28,49 @@ export class EditarPersonaComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private personaService$: UserService,
+    private personaService$: AuthService,
     private storageService$: StorageService,
-    private authService$: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.personaForm = this.fb.group({
       nombres: ['', [Validators.required]],
-      correo: [{ value: null, disabled: true }, [Validators.required]],
+      correo: ['', [Validators.required, Validators.email]],
       password: ['',[Validators.required, Validators.minLength(6), passwordValidator],],
       especialidad: ['', [Validators.required, Validators.maxLength(100)]],
-      tipodeusuario: [{ value: null, disabled: true }, [Validators.required]],
+      tipodeusuario: ['', [Validators.required]],
       nivelacademico: ['', [Validators.required]],
-      motivoderegistro: [{ value: null, disabled: true }, [Validators.required]],
+      motivoderegistro: [{ value: '', disabled: true }, [Validators.required]],
       areaestudio: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    if (this.storageService$.getUser() == null) {
-      this.router.navigate(['/error']);
-    }
-
-    this.route.paramMap.subscribe((params) => {
-      let id: any = params.get('id');
-      if (!id) {
-        this.router.navigate(['/error']);
-        return;
-      }
-      this.personaService$.getUser(params.get('id')).subscribe(
-        (data: Persona) => {
-          this.persona = data;
-          this.personaForm.patchValue(data);
-        },
-        (error) => {
-          this.router.navigate(['/error']);
-        }
-      );
-    });
+    let persona2: Persona = {
+      areaestudio: 'matematicas',
+      correo: 'kevin@kevin',
+      especialidad: 'especialidadrytreytrytrytry',
+      motivoderegistro: 'ingreso extras',
+      nivelacademico: 'primaria',
+      nombres: 'kevin',
+      password: 'sdsd45w45e4wKlJ@',
+      tipodeusuario: 'profesor',
+    };
+     this.personaForm.patchValue(persona2);
   }
 
   guardarCambios(): void {
-    if (this.personaForm.valid ) {
-      let form = this.personaForm.getRawValue();
-      if (this.persona !== null) {
-        this.authService$.update(form, this.persona).subscribe({
-          next: (data) => {
-            alert('actualizado registrado');
-            this.router.navigate(['/login']);
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      }
+    if (this.personaForm.valid) {
+          this.personaService$.register(this.personaForm.value).subscribe({
+            next: (data) => {
+              console.log(data);
+              alert("correctamente registrado")
+               this.router.navigate(['/login']);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
     } else {
       console.log('formulario invalido');
     }

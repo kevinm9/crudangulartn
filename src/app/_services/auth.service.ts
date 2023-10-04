@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Persona } from '../models/persona.model';
 
 const AUTH_API = 'http://localhost:8080/api';
 
@@ -31,12 +32,14 @@ export class AuthService {
     return this.http.get(AUTH_API);
   }
 
-  register(data: any): Observable<any> {
-    return this.http.post(
-      AUTH_API + '/personas',
-      {
-        data,
-      },
+  register(persona: Persona): Observable<any> {
+    return this.http.post(AUTH_API + '/personas', persona, httpOptions);
+  }
+
+  update(persona: Persona, personaold: Persona): Observable<any> {
+    return this.http.put(
+      AUTH_API + '/personas/' + personaold.id,
+      persona,
       httpOptions
     );
   }

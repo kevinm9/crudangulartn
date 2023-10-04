@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser()?.tipodeusuario;
+        window.location.reload();
       },
       (err) => {
         console.log(err);
