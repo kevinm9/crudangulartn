@@ -8,15 +8,14 @@ import { Persona } from './models/persona.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  private roles: string[] = [];
+  private roles: string | null = '';
   isLoggedIn = false;
-  showAdminBoard = false;
-  showModeratorBoard = false;
+  isAlumno = false;
   username?: string;
-  user?:Persona | null=null;
+  user?: Persona | null = null;
   eventBusSub?: Subscription;
 
   constructor(
@@ -27,16 +26,13 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
-
     if (this.isLoggedIn) {
       const user = this.storageService.getUser();
-      //this.roles = user.roles;
-      //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      //this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+      this.roles = user?.tipodeusuario ? user.tipodeusuario : null;
+      this.isAlumno = this.roles == 'estudiante' ? true : false;
       this.user = user;
       this.username = user?.nombres;
     }
-
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
@@ -44,17 +40,17 @@ export class AppComponent {
 
   logout(): void {
     this.authService.logout().subscribe({
-      next: res => {
+      next: (res) => {
         console.log(res);
         this.storageService.clean();
 
         window.location.reload();
       },
-      error: err => {
+      error: (err) => {
         console.log(err);
         this.storageService.clean();
         window.location.reload();
-      }
+      },
     });
   }
 }

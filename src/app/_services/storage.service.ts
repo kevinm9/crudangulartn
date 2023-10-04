@@ -19,7 +19,7 @@ export class StorageService {
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 
-  public getUser(): Persona|null {
+  public getUser(): Persona | null {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {
       return JSON.parse(user);
@@ -33,5 +33,14 @@ export class StorageService {
       return true;
     }
     return false;
+  }
+
+  public getRol(): String {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      let rol:Persona = JSON.parse(user);
+      return rol.tipodeusuario?rol.tipodeusuario :"";
+    }
+    return "";
   }
 }
