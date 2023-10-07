@@ -46,17 +46,6 @@ export class GuardarPersonaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let persona2: Persona = {
-      areaestudio: 'matematicas',
-      correo: 'kevin@kevin',
-      especialidad: 'especialidadrytreytrytrytry',
-      motivoderegistro: 'ingreso extras',
-      nivelacademico: 'primaria',
-      nombres: 'kevin',
-      password: 'sdsd45w45e4wKlJ@',
-      tipodeusuario: 'profesor',
-    };
-     this.personaForm.patchValue(persona2);
   }
 
   guardarCambios(): void {

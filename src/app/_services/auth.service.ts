@@ -49,11 +49,11 @@ export class AuthService {
   }
 
   getUser(id: any): Observable<Persona> {
-    return this.http.get<Persona>(`/productos/${id}`);
+    return this.http.get<Persona>(`${AUTH_API}/personas/${id}`);
   }
 
   getPublicContent(): Observable<any> {
-    return this.http.get('http://localhost:8080/', {
+    return this.http.get(`${AUTH_API}`, {
       responseType: 'text',
     });
   }

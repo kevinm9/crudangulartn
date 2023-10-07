@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { Persona } from '../models/persona.model';
 import { StorageService } from '../_services/storage.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-listarprofesores',
@@ -19,6 +21,7 @@ export class ListarprofesoresComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
+    private router: Router,
     private personaService: AuthService
   ) {
     this.personaForm = this.fb.group({
@@ -29,6 +32,9 @@ export class ListarprofesoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+        if (this.storageService.getUser() == null) {
+          this.router.navigate(['/error']);
+        }
     this.cargarPersonas();
     this.isProfesor = this.storageService.isProfesor();
   }
