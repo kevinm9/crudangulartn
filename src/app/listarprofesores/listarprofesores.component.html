@@ -1,0 +1,54 @@
+<!-- Agregar, editar y listar personas -->
+<div class="container mt-4">
+  <h2>Profesores</h2>
+
+  <!-- Formulario para agregar/editar persona -->
+  <form *ngIf="isProfesor" [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
+    <div class="form-group">
+      <label for="nombres">Nombres</label>
+      <input type="text" class="form-control" id="nombres" formControlName="nombres">
+    </div>
+    <div class="form-group">
+      <label for="correo">Correo</label>
+      <input type="email" class="form-control" id="correo" formControlName="correo">
+    </div>
+    <div class="form-group">
+      <label for="especialidad">Especialidad</label>
+      <input type="text" class="form-control" id="especialidad" formControlName="especialidad">
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ modoEdicion ? 'Editar' : 'Agregar' }}</button>
+  </form>
+
+  <!-- Tabla de datos de personas -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombres</th>
+        <th>Area de estudio</th>
+        <th>Especialidad</th>
+        <th>Nivel academico</th>
+        <th>Motivo de registro</th>
+        <th>Cursos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let persona of personas">
+        <td>{{ persona.id }}</td>
+        <td>{{ persona.nombres }}</td>
+        <td>{{ persona.areaestudio }}</td>
+        <td>{{ persona.especialidad }}</td>
+        <td>{{ persona.nivelacademico }}</td>
+        <td>{{ persona.motivoderegistro }}</td>
+        <td *ngIf="isProfesor">
+          <button class="btn btn-info" (click)="editarPersona(persona)">Editar</button>
+          <button class="btn btn-danger" (click)="eliminarPersona(persona.id)">Eliminar</button>
+        </td>
+        <td *ngIf="!isProfesor">
+          <button class="btn btn-info">Ver cursos</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

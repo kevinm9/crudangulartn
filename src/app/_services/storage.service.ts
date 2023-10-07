@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Persona } from '../models/persona.model';
 
-
 const USER_KEY = 'auth-user';
 
 @Injectable({
@@ -38,9 +37,17 @@ export class StorageService {
   public getRol(): String {
     const user = window.sessionStorage.getItem(USER_KEY);
     if (user) {
-      let rol:Persona = JSON.parse(user);
-      return rol.tipodeusuario?rol.tipodeusuario :"";
+      let rol: Persona = JSON.parse(user);
+      return rol.tipodeusuario ? rol.tipodeusuario : '';
     }
-    return "";
+    return '';
+  }
+
+  public isProfesor(): boolean {
+    const rol = this.getRol();
+    if (rol == 'profesor') {
+      return true;
+    }
+    return false;
   }
 }

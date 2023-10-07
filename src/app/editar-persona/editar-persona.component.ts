@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
-import { UserService } from '../_services/user.service';
 import { StorageService } from '../_services/storage.service';
 import { Persona } from '../models/persona.model';
 import { passwordValidator } from '../_helpers/validations'; // Importa la función de validación desde el archivo 'validations.ts'
@@ -29,20 +28,25 @@ export class EditarPersonaComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private personaService$: UserService,
+    private personaService$: AuthService,
     private storageService$: StorageService,
-    private authService$: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.personaForm = this.fb.group({
       nombres: ['', [Validators.required]],
       correo: [{ value: null, disabled: true }, [Validators.required]],
-      password: ['',[Validators.required, Validators.minLength(6), passwordValidator],],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(6), passwordValidator],
+      ],
       especialidad: ['', [Validators.required, Validators.maxLength(100)]],
       tipodeusuario: [{ value: null, disabled: true }, [Validators.required]],
       nivelacademico: ['', [Validators.required]],
-      motivoderegistro: [{ value: null, disabled: true }, [Validators.required]],
+      motivoderegistro: [
+        { value: null, disabled: true },
+        [Validators.required],
+      ],
       areaestudio: ['', [Validators.required]],
     });
   }
@@ -71,10 +75,10 @@ export class EditarPersonaComponent implements OnInit {
   }
 
   guardarCambios(): void {
-    if (this.personaForm.valid ) {
+    if (this.personaForm.valid) {
       let form = this.personaForm.getRawValue();
       if (this.persona !== null) {
-        this.authService$.update(form, this.persona).subscribe({
+        this.personaService$.update(form, this.persona).subscribe({
           next: (data) => {
             alert('actualizado registrado');
             this.router.navigate(['/login']);

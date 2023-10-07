@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { ListarprofesoresComponent } from './listarprofesores/listarprofesores.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'mod', component: BoardModeratorComponent },
   { path: 'admin', component: BoardAdminComponent },
   { path: 'editarpersona/:id', component: EditarPersonaComponent },
+  { path: 'profesores', component: ListarprofesoresComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'error',

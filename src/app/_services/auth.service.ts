@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   listar(): Observable<any> {
-    return this.http.get(AUTH_API);
+    return this.http.get(AUTH_API+ '/personas');
   }
 
   register(persona: Persona): Observable<any> {
@@ -46,5 +46,21 @@ export class AuthService {
 
   logout(): Observable<any> {
     return this.http.post(AUTH_API + 'signout', {}, httpOptions);
+  }
+
+  getUser(id: any): Observable<Persona> {
+    return this.http.get<Persona>(`/productos/${id}`);
+  }
+
+  getPublicContent(): Observable<any> {
+    return this.http.get('http://localhost:8080/', {
+      responseType: 'text',
+    });
+  }
+
+
+
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${AUTH_API}/${id}`);
   }
 }

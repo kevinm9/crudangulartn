@@ -17,6 +17,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
 import { EditarPersonaComponent } from './editar-persona/editar-persona.component';
 import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.component';
+import { ListarprofesoresComponent } from './listarprofesores/listarprofesores.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.compo
     BoardUserComponent,
     EditarPersonaComponent,
     GuardarPersonaComponent,
+    ListarprofesoresComponent,
   ],
   imports: [
     BrowserModule,
