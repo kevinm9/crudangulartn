@@ -5,19 +5,52 @@
   <!-- Formulario para agregar/editar persona -->
   <form *ngIf="isProfesor" [formGroup]="personaForm" (ngSubmit)="guardarPersona()">
     <div class="form-group">
-      <label for="nombres">Nombres</label>
-      <input type="text" class="form-control" id="nombres" formControlName="nombres">
+      <label for="nombres">Nombres:</label>
+      <input type="text" id="nombres" formControlName="nombres" class="form-control">
+      <div *ngIf="personaForm.get('nombres')?.hasError('required') && personaForm.get('nombres')?.touched" class="text-danger">
+        El nombre es requerido.
+      </div>
     </div>
     <div class="form-group">
-      <label for="correo">Correo</label>
-      <input type="email" class="form-control" id="correo" formControlName="correo">
+      <label for="areaestudio">Area de estudio:</label>
+      <select id="areaestudio" formControlName="areaestudio" class="form-control">
+       <option value="" disabled>Selecciona una opción</option>
+       <option *ngFor="let areaestudio of listareaestudio" [value]="areaestudio.value">{{ areaestudio.nombre }}</option>
+      </select>
+      <div *ngIf="personaForm.get('areaestudio')?.hasError('required') && personaForm.get('areaestudio')?.touched" class="text-danger">
+        El area de estudio es requerida.
+      </div>
     </div>
     <div class="form-group">
-      <label for="especialidad">Especialidad</label>
-      <input type="text" class="form-control" id="especialidad" formControlName="especialidad">
+      <label for="especialidad">Especialidad:</label>
+      <input type="text" id="especialidad" formControlName="especialidad" class="form-control">
+      <div *ngIf="personaForm.get('especialidad')?.hasError('required') && personaForm.get('especialidad')?.touched" class="text-danger">
+        La especialidad es requerida.
+      </div>
+      <div *ngIf="personaForm.get('especialidad')?.hasError('maxlength') && personaForm.get('especialidad')?.touched" class="text-danger">
+        La especialidad no puede tener mas de 100 caracteres .
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="nivelacademico">Nivel Académico:</label>
+      <select id="nivelacademico" formControlName="nivelacademico" class="form-control">
+       <option value="" disabled>Selecciona una opción</option>
+       <option *ngFor="let nivelacademico of listnivelacademico" [value]="nivelacademico.value">{{ nivelacademico.nombre }}</option>
+      </select>
+      <div *ngIf="personaForm.get('nivelacademico')?.hasError('required') && personaForm.get('nivelacademico')?.touched" class="text-danger">
+        El nivel academico es requerida.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="motivoderegistro">Motivo de Registro:</label>
+      <input type="text" id="motivoderegistro" formControlName="motivoderegistro" class="form-control">
+      <div *ngIf="personaForm.get('motivoderegistro')?.hasError('required') && personaForm.get('motivoderegistro')?.touched" class="text-danger">
+        El motivo de registro es requerida.
+      </div>
     </div>
 
     <button type="submit" class="btn btn-primary">{{ modoEdicion ? 'Editar' : 'Agregar' }}</button>
+    <button class="btn btn-danger" (click)="limpiarFormulario($event)">Limpiar Campos</button>
   </form>
 
   <!-- Tabla de datos de personas -->

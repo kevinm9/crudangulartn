@@ -5,7 +5,6 @@ import { Persona } from '../models/persona.model';
 import { StorageService } from '../_services/storage.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-listarprofesores',
   templateUrl: './listarprofesores.component.html',
@@ -16,7 +15,18 @@ export class ListarprofesoresComponent implements OnInit {
   personas: Persona[] = [];
   modoEdicion = false;
   personaSeleccionada: Persona | null = null;
-  isProfesor:boolean=false;
+  isProfesor: boolean = false;
+  listnivelacademico: { value: string; nombre: string }[] = [
+    { value: 'primaria', nombre: 'Primaria' },
+    { value: 'secundaria', nombre: 'Secundaria' },
+    { value: 'tercer nivel', nombre: 'Tercer nivel' },
+    { value: 'cuarto nivel', nombre: 'Cuarto nivel' },
+  ];
+  listareaestudio: { value: string; nombre: string }[] = [
+    { value: 'matematicas', nombre: 'Matemáticas' },
+    { value: 'literatura', nombre: 'Literatura' },
+    { value: 'sistemas', nombre: 'Sistemas' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -26,15 +36,17 @@ export class ListarprofesoresComponent implements OnInit {
   ) {
     this.personaForm = this.fb.group({
       nombres: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
       especialidad: ['', Validators.required],
+      nivelacademico: ['', Validators.required],
+      areaestudio: ['', Validators.required],
+      motivoderegistro: [{ value: null, disabled: true }],
     });
   }
 
   ngOnInit(): void {
-        if (this.storageService.getUser() == null) {
-          this.router.navigate(['/error']);
-        }
+    if (this.storageService.getUser() == null) {
+      this.router.navigate(['/error']);
+    }
     this.cargarPersonas();
     this.isProfesor = this.storageService.isProfesor();
   }
@@ -46,14 +58,23 @@ export class ListarprofesoresComponent implements OnInit {
   }
 
   guardarPersona(): void {
+    debugger;
     if (this.personaForm.valid) {
       const persona: Persona = this.personaForm.value;
       if (this.modoEdicion) {
         if (this.personaSeleccionada !== null) {
-          this.personaService.update(persona, this.personaSeleccionada);
+          this.personaService
+            .update(persona, this.personaSeleccionada)
+            .subscribe((data) => {
+              console.log(data);
+              this.cargarPersonas();
+            });
         }
       } else {
-        this.personaService.register(persona);
+        this.personaService.register(persona).subscribe((data) => {
+          console.log(data);
+          this.cargarPersonas();
+        });
       }
       this.limpiarFormulario();
     }
@@ -71,9 +92,10 @@ export class ListarprofesoresComponent implements OnInit {
     }
   }
 
-  limpiarFormulario(): void {
+  limpiarFormulario($event?: any): void {
+    $event.preventDefault();
+    this.personaForm.updateOn;
     this.modoEdicion = false;
     this.personaSeleccionada = null;
-    this.personaForm.reset();
   }
 }

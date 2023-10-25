@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { AuthService } from './_services/auth.service';
-import { EventBusService } from './_shared/event-bus.service';
 import { Persona } from './models/persona.model';
 
 @Component({
@@ -21,7 +20,6 @@ export class AppComponent {
   constructor(
     private storageService: StorageService,
     private authService: AuthService,
-    private eventBusService: EventBusService
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +30,9 @@ export class AppComponent {
       this.isAlumno = this.roles == 'estudiante' ? true : false;
       this.user = user;
       this.username = user?.nombres;
-    }
-    this.eventBusSub = this.eventBusService.on('logout', () => {
+    }else{
       this.logout();
-    });
+    }
   }
 
   logout(): void {
@@ -43,13 +40,12 @@ export class AppComponent {
       next: (res) => {
         console.log(res);
         this.storageService.clean();
-
-        window.location.reload();
+        //window.location.reload();
       },
       error: (err) => {
         console.log(err);
         this.storageService.clean();
-        window.location.reload();
+        //window.location.reload();
       },
     });
   }
