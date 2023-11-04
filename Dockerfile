@@ -19,10 +19,11 @@ RUN npm run build
 # Use official nginx image as the base image
 FROM nginx:latest
 
+# Copy the conf nginx.
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/angular-14-jwt-auth /usr/share/nginx/html
-# Copy the conf nginx.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 
 # Expose port 80
 EXPOSE 80
