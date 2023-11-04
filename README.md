@@ -32,9 +32,13 @@
 `docker run -d -it -p 4200:80/tcp --name angular-app kevinm9/angular-app:latest`
 
 ###### URL
-`HTTP://docker machine URL:4200`
+`HTTP://URL de la máquina contenedora:4200`
 ###### o
 `HTTP://http://localhost:4200`
+
+[![captura](https://raw.githubusercontent.com/kevinm9/crudangulartn/dockerangular/foto1.png "captura")](https://raw.githubusercontent.com/kevinm9/crudangulartn/dockerangular/foto1.png "captura")
+
+
 ######  otros comandos
 
 `docker ps`
