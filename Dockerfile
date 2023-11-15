@@ -1,6 +1,7 @@
 FROM node:14.21-alpine3.16 AS build
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
+COPY package.json ./
+#COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
