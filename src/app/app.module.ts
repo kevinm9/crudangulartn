@@ -10,9 +10,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-import { BoardUserComponent } from './board-user/board-user.component';
 
 import { EditarPersonaComponent } from './editar-persona/editar-persona.component';
 import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.component';
@@ -27,9 +24,6 @@ import { CrudCursosComponent } from './crud-cursos/crud-cursos.component';
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    BoardAdminComponent,
-    BoardModeratorComponent,
-    BoardUserComponent,
     EditarPersonaComponent,
     GuardarPersonaComponent,
     ListarprofesoresComponent,

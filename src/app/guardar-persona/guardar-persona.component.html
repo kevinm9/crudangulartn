@@ -45,6 +45,7 @@
     <div class="form-group">
       <label for="tipodeusuario">Tipo de Usuario:</label>
       <select id="tipodeusuario" formControlName="tipodeusuario" class="form-control" (change)="changelboxtipodeusuario()">
+        <option value="" disabled>Selecciona una opción</option>
         <option value="profesor">Profesor</option>
         <option value="estudiante">Estudiante</option>
       </select>

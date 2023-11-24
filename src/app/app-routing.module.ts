@@ -4,13 +4,9 @@ import { EditarPersonaComponent } from './editar-persona/editar-persona.componen
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { ListarprofesoresComponent } from './listarprofesores/listarprofesores.component';
 
 
@@ -19,9 +15,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: GuardarPersonaComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
   { path: 'editarpersona/:id', component: EditarPersonaComponent },
   { path: 'profesores', component: ListarprofesoresComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

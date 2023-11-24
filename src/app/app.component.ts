@@ -10,7 +10,7 @@ import { Persona } from './models/persona.model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  private roles: string | null = '';
+  private roles: String | null = '';
   isLoggedIn = false;
   isAlumno = false;
   username?: string;
@@ -19,18 +19,17 @@ export class AppComponent {
 
   constructor(
     private storageService: StorageService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
     if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
-      this.roles = user?.tipodeusuario ? user.tipodeusuario : null;
-      this.isAlumno = this.roles == 'estudiante' ? true : false;
-      this.user = user;
-      this.username = user?.nombres;
-    }else{
+      this.user = this.storageService.getUser();
+      this.roles = this.storageService.getRol();
+      this.isAlumno = this.storageService.isAlumno();
+      this.username = this.user?.nombres;
+    } else {
       this.logout();
     }
   }
@@ -46,6 +45,18 @@ export class AppComponent {
         console.log(err);
         this.storageService.clean();
         //window.location.reload();
+        if (err.error) {
+          try {
+            const res = JSON.parse(err.error);
+            console.log(res.message);
+          } catch {
+            console.log(
+              `Error with status: ${err.status} - ${err.statusText} - ${err.message} `
+            );
+          }
+        } else {
+          console.log(`Error with status: ${err.status}`);
+        }
       },
     });
   }

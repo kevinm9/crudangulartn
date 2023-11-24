@@ -4,6 +4,7 @@ import { AuthService } from '../_services/auth.service';
 import { Persona } from '../models/persona.model';
 import { StorageService } from '../_services/storage.service';
 import { Router } from '@angular/router';
+import { passwordValidator } from '../_helpers/validations';
 
 @Component({
   selector: 'app-listarprofesores',
@@ -35,11 +36,17 @@ export class ListarprofesoresComponent implements OnInit {
     private personaService: AuthService
   ) {
     this.personaForm = this.fb.group({
-      nombres: ['', Validators.required],
-      especialidad: ['', Validators.required],
-      nivelacademico: ['', Validators.required],
-      areaestudio: ['', Validators.required],
-      motivoderegistro: [{ value: null, disabled: true }],
+      nombres: ['', [Validators.required]],
+      correo: ['', [Validators.required]],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(6), passwordValidator],
+      ],
+      especialidad: ['', [Validators.required, Validators.maxLength(100)]],
+      tipodeusuario: ['', [Validators.required]],
+      nivelacademico: ['', [Validators.required]],
+      motivoderegistro: ['', [Validators.required]],
+      areaestudio: ['', [Validators.required]],
     });
   }
 
@@ -57,45 +64,93 @@ export class ListarprofesoresComponent implements OnInit {
     });
   }
 
+  changelboxtipodeusuario() {
+    switch (this.personaForm.get('tipodeusuario')?.value) {
+      case 'estudiante':
+        this.personaForm.patchValue({ motivoderegistro: 'academicos' });
+        break;
+      case 'profesor':
+        this.personaForm.patchValue({ motivoderegistro: 'ingreso extras' });
+        break;
+      default:
+        this.personaForm.patchValue({ motivoderegistro: 'academicos' });
+        break;
+    }
+  }
+
   guardarPersona(): void {
-    debugger;
+    this.personaForm.markAllAsTouched();
     if (this.personaForm.valid) {
-      const persona: Persona = this.personaForm.value;
+      const persona: Persona = this.personaForm.getRawValue();
       if (this.modoEdicion) {
         if (this.personaSeleccionada !== null) {
           this.personaService
             .update(persona, this.personaSeleccionada)
-            .subscribe((data) => {
-              console.log(data);
-              this.cargarPersonas();
+            .subscribe({
+              next: (data) => {
+                alert('editado con exito');
+                console.log(data);
+                this.limpiarFormulario();
+                this.cargarPersonas();
+              },
+              error: (err) => {
+                console.log(err);
+                alert(err?.error?.fieldErrors[0]?.field || 'ocurrio un error');
+              },
             });
         }
       } else {
-        this.personaService.register(persona).subscribe((data) => {
-          console.log(data);
-          this.cargarPersonas();
+        this.personaService.register(persona).subscribe({
+          next: (data) => {
+            alert('guardado con exito');
+            console.log(data);
+            this.cargarPersonas();
+          },
+          error: (err) => {
+            alert(err?.error?.message || 'ocurrio un error');
+            console.log(err);
+          },
         });
       }
-      this.limpiarFormulario();
     }
   }
 
+  eliminarPersona(id: any): void {
+    if (confirm('¿Estás seguro de que deseas eliminar esta persona?')) {
+      this.personaService.delete(id).subscribe({
+        next: () => {
+          alert('eliminado correctamente');
+          this.cargarPersonas();
+        },
+        error: (err) => {
+          console.log(err);
+          alert('ocurrio un erro al eliminar');
+        },
+      });
+    }
+  }
+
+  limpiarFormulario(): void {
+    this.personaForm.get('tipodeusuario')!.enable(); // ! le dice a TypeScript que ignore la posibilidad de que sea null
+    this.personaForm.get('correo')!.enable();
+    this.personaForm.get('motivoderegistro')!.enable();
+    this.personaForm.reset();
+    this.modoEdicion = false;
+    this.personaSeleccionada = null;
+  }
+
   editarPersona(persona: Persona): void {
+    this.personaForm.get('tipodeusuario')!.disable(); // ! le dice a TypeScript que ignore la posibilidad de que sea null
+    this.personaForm.get('correo')!.disable();
+    this.personaForm.get('motivoderegistro')!.disable();
     this.modoEdicion = true;
     this.personaSeleccionada = persona;
     this.personaForm.patchValue(persona);
   }
 
-  eliminarPersona(id: any): void {
-    if (confirm('¿Estás seguro de que deseas eliminar esta persona?')) {
-      this.personaService.delete(id);
-    }
-  }
-
-  limpiarFormulario($event?: any): void {
-    $event.preventDefault();
-    this.personaForm.updateOn;
+  clonarFormulario(persona: Persona) {
     this.modoEdicion = false;
     this.personaSeleccionada = null;
+    this.personaForm.patchValue(persona);
   }
 }

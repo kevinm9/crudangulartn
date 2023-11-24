@@ -75,6 +75,7 @@ export class EditarPersonaComponent implements OnInit {
   }
 
   guardarCambios(): void {
+    this.personaForm.markAllAsTouched();
     if (this.personaForm.valid) {
       let form = this.personaForm.getRawValue();
       if (this.persona !== null) {

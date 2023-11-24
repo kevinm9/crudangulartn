@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Persona } from '../models/persona.model';
 
 const USER_KEY = 'auth-user';
-
+const ROL_PROFESOR = 'profesor';
+const ROL_ALUMNO = 'estudiante';
 @Injectable({
   providedIn: 'root',
 })
@@ -45,7 +46,15 @@ export class StorageService {
 
   public isProfesor(): boolean {
     const rol = this.getRol();
-    if (rol == 'profesor') {
+    if (rol == ROL_PROFESOR) {
+      return true;
+    }
+    return false;
+  }
+
+  public isAlumno(): boolean {
+    const rol = this.getRol();
+    if (rol == ROL_ALUMNO) {
       return true;
     }
     return false;

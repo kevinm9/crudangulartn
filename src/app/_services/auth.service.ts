@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Persona } from '../models/persona.model';
+import { Login } from '../models/login.model';
 
 const AUTH_API = 'http://localhost:8080/api';
 
@@ -17,19 +18,12 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(correo: string, password: string): Observable<any> {
-    return this.http.post(
-      AUTH_API + '/login/sesion',
-      {
-        correo,
-        password,
-      },
-      httpOptions
-    );
+  login(login:Login): Observable<any> {
+    return this.http.post(AUTH_API + '/login', login, httpOptions);
   }
 
   listar(): Observable<any> {
-    return this.http.get(AUTH_API+ '/personas');
+    return this.http.get(AUTH_API + '/personas');
   }
 
   register(persona: Persona): Observable<any> {
@@ -45,7 +39,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', {}, httpOptions);
+    return this.http.post(AUTH_API + '/signout', {}, httpOptions);
   }
 
   getUser(id: any): Observable<Persona> {
@@ -53,14 +47,12 @@ export class AuthService {
   }
 
   getPublicContent(): Observable<any> {
-    return this.http.get(`${AUTH_API}`, {
+    return this.http.get('http://localhost:8080', {
       responseType: 'text',
     });
   }
 
-
-
   delete(id: any): Observable<any> {
-    return this.http.delete(`${AUTH_API}/${id}`);
+    return this.http.delete(`${AUTH_API}/personas/${id}`);
   }
 }

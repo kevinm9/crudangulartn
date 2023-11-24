@@ -50,16 +50,19 @@ export class GuardarPersonaComponent implements OnInit {
 
   guardarCambios(): void {
     if (this.personaForm.valid) {
-          this.personaService$.register(this.personaForm.value).subscribe({
-            next: (data) => {
-              console.log(data);
-              alert("correctamente registrado")
-               this.router.navigate(['/login']);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
+          this.personaService$
+            .register(this.personaForm.getRawValue())
+            .subscribe({
+              next: (data) => {
+                console.log(data);
+                alert('correctamente registrado');
+                this.router.navigate(['/login']);
+              },
+              error: (err) => {
+                console.log(err);
+                alert(err.error.message || 'ocurrio un error');
+              },
+            });
     } else {
       console.log('formulario invalido');
     }
