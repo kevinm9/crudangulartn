@@ -2,8 +2,24 @@
 
 - Crud
 
+# levantar aplicativo sin docker 
 
-# levantar aplicativo Forma 1
+1.-clonar el repositorio
+
+con git clone 
+
+2.-cambiar a la rama donde este el codigo actualizado a la ultima version o ultimo commit de ser necesario
+
+3.- instalar dependencias 
+
+`npm install`
+
+4.- correr app 
+`npm start`
+
+`HTTP://http://localhost:4200`
+
+# levantar aplicativo con docker
 
 ### Codigo
 
@@ -46,20 +62,5 @@
 `docker stop angular-app`
 
 
-# levantar aplicativo Forma 2
 
-1.-clonar el repositorio
-
-con git clone 
-
-2.-cambiar a la rama donde este el codigo actualizado a la ultima version
-
-3.- instalar dependencias 
-
-`npm install`
-
-4.- correr app 
-`npm start`
-
-`HTTP://http://localhost:4200`
 ### End
