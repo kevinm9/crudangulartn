@@ -49,10 +49,15 @@
 # levantar aplicativo Forma 2
 
 1.-clonar el repositorio
+
 con git clone 
+
 2.-cambiar a la rama donde este el codigo actualizado a la ultima version
+
 3.- instalar dependencias 
+
 `npm install`
+
 4.- correr app 
 `npm start`
 
