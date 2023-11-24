@@ -10,8 +10,8 @@ import { Login } from '../models/login.model';
 })
 export class LoginComponent implements OnInit {
   form: Login = {
-    correo: '',
-    password: '',
+    correo: 'kevin2@kevin.com',
+    password: '123456',
   };
   isLoggedIn = false;
   isLoginFailed = false;
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
-        this.errorMessage =
-          err.error?.message || err.error.error.message || err.error.error;
+        this.errorMessage = err.error?.message || err.error.error;
         this.isLoginFailed = true;
       },
     });

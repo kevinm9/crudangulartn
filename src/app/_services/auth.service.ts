@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Persona } from '../models/persona.model';
 import { Login } from '../models/login.model';
 
@@ -18,12 +18,18 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(login:Login): Observable<any> {
+  login(login: Login): Observable<any> {
     return this.http.post(AUTH_API + '/login', login, httpOptions);
   }
 
   listar(): Observable<any> {
     return this.http.get(AUTH_API + '/personas');
+  }
+
+  listarprofesores(): Observable<Persona[]> {
+    return this.http.get<Persona[]>(AUTH_API + '/personas/profesores')
+    //filtrar los datos desde el frotend y no el backend
+    //.pipe(map((personas) => personas.filter((persona) => persona.tipodeusuario === 'profesor')));
   }
 
   register(persona: Persona): Observable<any> {

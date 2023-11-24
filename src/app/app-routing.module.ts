@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ListarprofesoresComponent } from './listarprofesores/listarprofesores.component';
+import { CrudCursosComponent } from './crud-cursos/crud-cursos.component';
+import { ProfesorCursosComponent } from './profesor-cursos/ProfesorCursosComponent';
 
 
 const routes: Routes = [
@@ -17,6 +19,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'editarpersona/:id', component: EditarPersonaComponent },
   { path: 'profesores', component: ListarprofesoresComponent },
+  { path: 'cursos', component: CrudCursosComponent },
+  { path: 'cursosdelprofesor/:id', component: ProfesorCursosComponent },
+
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'error',

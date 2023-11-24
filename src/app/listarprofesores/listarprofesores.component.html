@@ -133,7 +133,7 @@
         <th>Especialidad</th>
         <th>Nivel academico</th>
         <th>Motivo de registro</th>
-        <th>Cursos</th>
+        <th>{{ isProfesor?"Opciones":"Cursos" }}</th>
       </tr>
     </thead>
     <tbody>
@@ -150,7 +150,7 @@
           <button class="btn btn-warning" (click)="clonarFormulario(persona)">Clonar</button>
         </td>
         <td *ngIf="!isProfesor">
-          <button class="btn btn-info">Ver cursos</button>
+          <button class="btn btn-info" (click)="registrarcurso(persona)">Ver cursos</button>
         </td>
       </tr>
     </tbody>

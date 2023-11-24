@@ -15,6 +15,9 @@ import { EditarPersonaComponent } from './editar-persona/editar-persona.componen
 import { GuardarPersonaComponent } from './guardar-persona/guardar-persona.component';
 import { ListarprofesoresComponent } from './listarprofesores/listarprofesores.component';
 import { CrudCursosComponent } from './crud-cursos/crud-cursos.component';
+import { ProfesorCursosComponent } from './profesor-cursos/ProfesorCursosComponent';
+import { IsRegisteredPipe } from './_helpers/is-registered.pipe';
+import { IsMaxdealumnosPipe } from './_helpers/is-maxdealumnos.pipe';
 
 
 @NgModule({
@@ -28,6 +31,9 @@ import { CrudCursosComponent } from './crud-cursos/crud-cursos.component';
     GuardarPersonaComponent,
     ListarprofesoresComponent,
     CrudCursosComponent,
+    ProfesorCursosComponent,
+    IsRegisteredPipe,
+    IsMaxdealumnosPipe,
   ],
   imports: [
     BrowserModule,

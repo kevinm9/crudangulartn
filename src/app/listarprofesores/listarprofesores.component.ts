@@ -54,12 +54,15 @@ export class ListarprofesoresComponent implements OnInit {
     if (this.storageService.getUser() == null) {
       this.router.navigate(['/error']);
     }
+    if (this.storageService.isProfesor()) {
+      this.router.navigate(['/error']);
+    }
     this.cargarPersonas();
     this.isProfesor = this.storageService.isProfesor();
   }
 
   cargarPersonas(): void {
-    this.personaService.listar().subscribe((personas) => {
+    this.personaService.listarprofesores().subscribe((personas) => {
       this.personas = personas;
     });
   }
@@ -152,5 +155,11 @@ export class ListarprofesoresComponent implements OnInit {
     this.modoEdicion = false;
     this.personaSeleccionada = null;
     this.personaForm.patchValue(persona);
+  }
+
+  registrarcurso(persona: Persona) {
+    this.router.navigate(['/cursosdelprofesor', persona.id], {
+      queryParams: { nombredelprofesor: persona.nombres },
+    });
   }
 }

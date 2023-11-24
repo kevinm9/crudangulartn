@@ -62,15 +62,16 @@ export class EditarPersonaComponent implements OnInit {
         this.router.navigate(['/error']);
         return;
       }
-      this.personaService$.getUser(id).subscribe(
-        (data: Persona) => {
+      this.personaService$.getUser(id).subscribe({
+        next: (data) => {
           this.persona = data;
           this.personaForm.patchValue(data);
         },
-        (error) => {
+        error: (err) => {
+          console.log(err);
           this.router.navigate(['/error']);
-        }
-      );
+        },
+      });
     });
   }
 
